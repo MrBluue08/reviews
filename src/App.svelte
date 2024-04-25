@@ -1,10 +1,11 @@
 <script>
-  import { Router, Route } from "svelte-navigator";
+    import { Router, Route } from "svelte-navigator";
     import RegisterUser from "./components/user/registerUser.svelte";
+    import ProfileUser from "./components/user/profileUser.svelte";
 </script>
 
 
-<Router basepath="/reviews">
+<Router>
     <Route path="/register">
         <RegisterUser/>
     </Route>

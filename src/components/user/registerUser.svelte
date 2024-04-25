@@ -1,8 +1,23 @@
 <script>
     let email,userName,password;
-    async function handleSubmit(){
-        const response = await fetch("")
+    async function handleSubmit() {
+        try {
+            const response = await fetch("http://localhost:5000/user/registerUser", {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ email, userName, password })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to register user');
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
     }
+
 </script>
 
 <main>
