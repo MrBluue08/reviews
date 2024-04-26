@@ -1,0 +1,49 @@
+<script>
+
+</script>
+
+<style>
+    /* Basic styling for the navbar */
+    .navbar {
+        background-color: #333;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+    
+    /* Logo styling */
+    .navbar .logo {
+        float: left;
+        padding: 10px 20px;
+        font-size: 20px;
+        color: white;
+        text-decoration: none;
+    }
+    
+    /* Links styling */
+    .navbar a {
+        float: right;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+    }
+    
+    /* On hover color change */
+    .navbar a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+</style>
+
+<div class="navbar">
+<!-- Logo -->
+    <a href="#" class="logo">Your Logo</a>
+
+    <!-- Navigation links -->
+    <a href="#">My Profile</a>
+    <a href="#">Sign Up</a>
+    <a href="#">Sign In</a>
+</div>
