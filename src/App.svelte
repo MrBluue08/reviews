@@ -6,13 +6,14 @@
     import Header from "./components/user/header.svelte";
 </script>
 
-
-<Router>
+<div>
     <Header></Header>
-    <Route path="/register">
-        <RegisterUser/>
-    </Route>
-    <Route path="/main">
-        <Main/>
-    </Route>
-</Router>
+    <Router>
+        <Route path="/register">
+            <RegisterUser/>
+        </Route>
+        <Route path="/main">
+            <Main/>
+        </Route>
+    </Router>
+</div>
