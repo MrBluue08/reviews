@@ -3,19 +3,33 @@ const router = express.Router();
 const User = require('../models/users');
 const bcrypt = require('bcrypt');
 
+
 router.post('/registerUser',async (req, res) => {
     try {
-        console.log(req.body);
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = new User({
             email: req.body.email,
             username: req.body.userName,
-
+            password: hashedPassword
         })
-        res.status(200).send("User registered successfully");
+        await user.save();
+        res.status(200).json(user);
     } catch (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
     }
 })
+
+router.get('/getUser/:mail', async (req, res) =>{
+    try{
+        const result = await User.find({email: req.params.mail});
+        console.log(result);
+        res.status(200).json(result); 
+    }catch(err){
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
 
 module.exports = router;

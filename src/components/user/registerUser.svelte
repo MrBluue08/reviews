@@ -17,7 +17,6 @@
             console.error('Error:', error.message);
         }
     }
-
 </script>
 
 <main>
