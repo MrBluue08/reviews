@@ -1,8 +1,9 @@
+
 // authService.js
 let authenticated = false;
 
-export async function onRegister(user){
-    localStorage.setItem('user', user);
+export async function giveAuth(user){
+    localStorage.setItem('user', JSON.stringify(user));
 }
 
 export function onLogin(user) {

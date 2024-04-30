@@ -1,12 +1,13 @@
 <script>
-    import {onRegister, onLogin, logout} from '../../scripts/auth';
+    import {giveAuth, onLogin, logout} from '../../../scripts/auth';
 
 
 
 
     let email,userName,password;
-    let registerForm;
-    async function handleSubmit() {
+    let registerForm, loginForm;
+
+    async function handleRegister() {
         try {
             const response = await fetch("http://localhost:5000/user/registerUser", {
                 method: 'POST',
@@ -16,19 +17,26 @@
                 body: JSON.stringify({ email, userName, password })
             });
 
+            const user = await response.json();
             if (!response.ok) {
                 throw new Error('Failed to register user');
             }else{
-                onRegister(response);
+                giveAuth(user);
+                console.log(localStorage.getItem('user'));
             }
         } catch (error) {
             console.error('Error:', error.message);
         }
     }
 
-    async function register(){
-        handleSubmit();
-        registerForm.style.visibility = "hidden";
+    async function register(form){
+        handleRegister();
+        hideForm(form);
+    }
+
+    async function login(form){
+        handleLogin();
+        hideForm(form);
     }
 
     function showForm(form){
@@ -53,7 +61,7 @@
     </div>
     
     <div class="popUp" bind:this={registerForm}>
-        <form on:submit|preventDefault={register} class="form">
+        <form on:submit|preventDefault={register(registerForm)} class="form">
             <label for="mail">Email:</label>
             <input type="email" name="mail" bind:value={email} required>
             <label for="userName">User name:</label>
@@ -62,6 +70,20 @@
             <input type="password" name="password" bind:value={password} required>
             <div>
                 <button type="submit">Register</button>
+                <button on:click|preventDefault={hideForm(registerForm)}>Cancel</button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="popUp" bind:this={loginForm}>
+        <form on:submit|preventDefault={login(loginForm)} class="form">
+            <label for="userName">User name:</label>
+            <input type="text" name="userName" bind:value={userName} required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" bind:value={password} required>
+            <div>
+                <button type="submit">Login</button>
                 <button on:click|preventDefault={hideForm(registerForm)}>Cancel</button>
             </div>
         </form>
