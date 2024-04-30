@@ -22,7 +22,6 @@
                 throw new Error('Failed to register user');
             }else{
                 giveAuth(user);
-                console.log(localStorage.getItem('user'));
             }
         } catch (error) {
             console.error('Error:', error.message);
@@ -51,13 +50,16 @@
 
 <div>
     <div class="navbar">
-    <!-- Logo -->
-        <!-- <a href="#" class="logo">Your Logo</a> -->
-    
-        <!-- Navigation links -->
-        <button>My Profile</button>
-        <button on:click={showForm(registerForm)}>Sign Up</button>
-        <button>Sign In</button>
+        <a href="">
+            <div class="logo">
+                <p>PicturePulse</p>
+            </div>
+        </a>
+        <div class="buttons">
+            <button>My Profile</button>
+            <button on:click={showForm(registerForm)}>Sign Up</button>
+            <button on:click={showForm(loginForm)}>Sign In</button>
+        </div>
     </div>
     
     <div class="popUp" bind:this={registerForm}>
@@ -84,7 +86,7 @@
             <input type="password" name="password" bind:value={password} required>
             <div>
                 <button type="submit">Login</button>
-                <button on:click|preventDefault={hideForm(registerForm)}>Cancel</button>
+                <button on:click|preventDefault={hideForm(loginForm)}>Cancel</button>
             </div>
         </form>
     </div>
@@ -93,10 +95,12 @@
 <style>
     .popUp{
         margin: 0;
-        margin-top: 5vh;
-        margin-left: 40%;
-        margin-right: 40%;
+        margin-top: 5%;
         position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
         z-index: 9;
         width: 30%;
         visibility: hidden;
@@ -108,12 +112,12 @@
     }
     /* Basic styling for the navbar */
     .navbar {
-        background-color: #333;
+        background-color: #001f27;
         overflow: hidden;
         overflow-y: auto;
         position: fixed;
         top: 0;
-        height: 5vh;
+        height: 6vh;
         width: 100%;
     }
 
@@ -128,20 +132,26 @@
     button{
         margin-left: 3px;
     }
+    
     .form > div{
         display: flex;
         justify-content: end;
     }
     
     /* Logo styling */
-    .navbar .logo {
+    .logo {
         float: left;
-        padding: 10px 20px;
-        font-size: 20px;
         color: white;
+        width: auto;
+        height: 100%;
         text-decoration: none;
+        padding-left: 15vh;
     }
-    
+
+    .buttons{
+        padding-right: 15vh;
+    }
+
     /* Links styling */
     .navbar button {
         float: right;
@@ -150,11 +160,12 @@
         text-align: center;
         padding: 14px 20px;
         text-decoration: none;
+        background-color: transparent;
+        border: none;
     }
     
     /* On hover color change */
     .navbar button:hover {
-        background-color: #ddd;
         color: black;
     }
 </style>
