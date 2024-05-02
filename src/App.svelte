@@ -1,12 +1,14 @@
 <script>
     import { Router, Route } from "svelte-navigator";
-    import { checkLogged } from "../scripts/auth";
+    import { checkLogged, checkAdmin } from "../scripts/auth";
     import ProfileUser from "./components/user/profileUser.svelte";
     import Main from "./components/user/main.svelte";
     import Header from "./components/user/header.svelte";
     import LoggedHeader from "./components/user/loggedHeader.svelte";
+    import NewFilm from "./components/admin/newFilm.svelte";
 
-    let loggedIn = checkLogged(); 
+    let loggedIn = checkLogged();
+    let admin = checkAdmin();
 </script>
 
 <div>
@@ -16,6 +18,11 @@
         <Header/>
     {/if}
     <Router>
-        <Route path="/main" component={Main}/>
+        <Route path="" component={Main}/>
     </Router>
+
+    {#if admin}
+        <Route path="/newFilm" component={Main}/>
+    {/if}
+
 </div>

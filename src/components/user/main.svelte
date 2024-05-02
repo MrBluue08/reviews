@@ -34,4 +34,7 @@
 </main>
 
 <style>
+    main{
+        padding-top: 8vh;
+    }
 </style>

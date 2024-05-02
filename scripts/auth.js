@@ -19,6 +19,14 @@ export function checkLogged(){
     }
 }
 
+export function checkAdmin(){
+    if(localStorage.getItem('user') == 'admin' && localStorage.getItem('auth')){
+        return true;
+    }else{
+        return false;
+    }
+} 
+
 export function logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('auth');
