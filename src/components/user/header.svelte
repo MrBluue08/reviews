@@ -1,5 +1,5 @@
 <script>
-    import {giveAuth, onLogin, logout} from '../../../scripts/auth';
+    import {giveAuth} from '../../../scripts/auth';
 
 
 
@@ -47,7 +47,9 @@
             });
 
             const user = await response.json();
+            giveAuth(user);
             hideForm(form);
+            location.reload();
         } catch (error) {
             logError.classList.remove('invisible');
         }
@@ -76,7 +78,6 @@
             </a>
         </div>
         <div class="buttons">
-            <button>My Profile</button>
             <button on:click={() => { showForm(registerForm); hideForm(loginForm); }}>Sign Up</button>
             <button on:click={() => { showForm(loginForm), hideForm(registerForm); }}>Sign In</button>
         </div>
@@ -91,7 +92,7 @@
             <label for="password">Password:</label>
             <input type="password" name="password" bind:value={password} required>
             <label for="error" class="errorMsg invisible" bind:this={registerError}>Credentials already in use</label>
-            <div>
+            <div class="submit">
                 <button type="submit">Register</button>
                 <button on:click|preventDefault={hideForm(registerForm)}>Cancel</button>
             </div>
@@ -106,7 +107,7 @@
             <label for="password">Password:</label>
             <input type="password" name="password" bind:value={password} required>
             <label for="error" class="errorMsg invisible" bind:this={logError}>Invalid credentials</label>
-            <div>
+            <div class="submit">
                 <button type="submit">Login</button>
                 <button on:click|preventDefault={hideForm(loginForm)}>Cancel</button>
             </div>
@@ -116,7 +117,7 @@
 
 <style>
 
-    /*Genral*/
+    /*General*/
     .invisible{
         display: none;
     }
@@ -138,6 +139,13 @@
         display: flex;
         justify-content: center;
         color: white;
+        box-shadow: 
+        rgba(9, 76, 92, 0.4) 5px 5px, 
+        rgba(9, 76, 92, 0.3) 10px 10px,
+        rgba(9, 76, 92, 0.2) 15px 15px, 
+        rgba(9, 76, 92, 0.1) 20px 20px, 
+        rgba(9, 76, 92, 0.05) 25px 25px;
+
     }
     form{
         margin: 10px;
@@ -150,10 +158,52 @@
         color: red;
     }
 
-     form > div{
+    form > div{
         display: flex;
         justify-content: end;
     }
+
+    .submit > button {
+        margin: 5px; /* Adjust the margin as needed */
+        align-self: center;
+        background-color: #fff;
+        background-image: none;
+        background-position: 0 90%;
+        background-repeat: repeat no-repeat;
+        background-size: 4px 3px;
+        border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+        border-style: solid;
+        border-width: 2px;
+        box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+        box-sizing: border-box;
+        color: #41403e;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Neucha, sans-serif;
+        font-size: 1rem;
+        line-height: 23px;
+        outline: none;
+        padding: .75rem;
+        text-decoration: none;
+        transition: all 235ms ease-in-out;
+        border-bottom-left-radius: 15px 255px;
+        border-bottom-right-radius: 225px 15px;
+        border-top-left-radius: 255px 15px;
+        border-top-right-radius: 15px 225px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+    .submit > button:hover {
+        box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+        transform: translate3d(0, 2px, 0);
+    }
+
+    .submit > button:focus {
+        box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+    }
+
 
     
     /*Styles for the navbar*/
@@ -167,6 +217,7 @@
         display: flex;
         justify-content: space-between;
     }
+
 
     .logo{
         height: 100%;
