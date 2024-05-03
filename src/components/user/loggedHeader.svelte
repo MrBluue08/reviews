@@ -20,7 +20,7 @@
 <style>
      /*Styles for the navbar*/
      .navbar {
-        background-color: #094c5c;
+        background-color: #2C3E50;
         overflow: hidden;
         position: fixed;
         top: 0;

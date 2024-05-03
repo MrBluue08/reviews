@@ -134,7 +134,7 @@
         z-index: 9;
         width: 30%;
         visibility: hidden;
-        background-color: #094c5c;
+        background-color: #3498DB;
         border-radius: 8px;
         display: flex;
         justify-content: center;
@@ -208,7 +208,7 @@
     
     /*Styles for the navbar*/
     .navbar {
-        background-color: #094c5c;
+        background-color: #2C3E50;
         overflow: hidden;
         position: fixed;
         top: 0;
