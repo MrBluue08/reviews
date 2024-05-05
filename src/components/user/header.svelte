@@ -216,6 +216,7 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+        z-index: 9;
     }
 
 

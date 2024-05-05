@@ -25,25 +25,55 @@
 </script>
 
 <main>
-    <form on:submit|preventDefault={getFilms}>
-        <button type="submit">getFilmes</button>
-    </form>
-    {#await films}
-        <h1>buenas</h1>
-    {:then list}
-        {console.log(list)}
-        {#each films as film}
-            <div>{film.title}</div>
-        {/each} 
-    {:catch error}
-        <div>
-            {error}
-        </div>
-    {/await}
+   
+    <div class="films">
+        {#await films}
+        <h1>Cargando</h1>
+        {:then}
+            {#each films as film}
+                <div class="card">
+                    <img src="/images/{film.poster}" alt="Poster of {film.title}" class="cardInfo img">
+                    <div class="cardInfo txt">
+                        <h4>{film.title}</h4>
+                    </div>
+                </div>
+            {/each} 
+        {:catch error}
+            <div>
+                {error}
+            </div>
+        {/await}
+    </div>
 </main>
 
 <style>
     main{
         padding-top: 8vh;
     }
+
+    .card {
+        display: grid;
+        grid-template-columns: 1;
+        grid-template-rows: 1;
+        width: 25vh;
+    }
+
+    .cardInfo {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        width: 100%;
+    }
+
+    .cardInfo.txt {
+        height: 100%;
+        opacity: 0; /* Start with opacity set to 0 */
+    }
+
+    .card:hover .cardInfo.txt {
+        transition: opacity 0.3s ease; /* Transition effect for opacity */
+        display: block;
+        opacity: 1;
+    }
+
+   
 </style>
