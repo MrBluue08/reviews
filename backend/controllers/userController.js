@@ -19,10 +19,9 @@ router.post('/registerUser',async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 })
-
 router.post('/login', async (req, res) =>{
     try{
-        const result = await User.findOne({username: req.body.username});
+        const result = await User.findOne({ $or: [{email: req.body.idLog}, {username: req.body.idLog}]});
         const correctPassword = await bcrypt.compare(req.body.password, result.password);
         if(!result || !correctPassword){
             res.status(401).send('Incorrect credentials');

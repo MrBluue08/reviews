@@ -21,13 +21,12 @@
     <Router>
         <!-- RUTAS DE ADMIN -->
         <Route path="/adminLogin" component={Login}/>
+        {#if admin}
+            <Route path="/newFilm" component={NewFilm}/>
+        {/if}
 
         <!-- RUTAS DE USER -->
         <Route path="" component={Main}/>
     </Router>
-
-    {#if admin}
-        <Route path="/newFilm" component={Main}/>
-    {/if}
 
 </div>

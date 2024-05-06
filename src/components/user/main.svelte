@@ -25,7 +25,6 @@
 </script>
 
 <main>
-   
     <div class="films">
         {#await films}
         <h1>Cargando</h1>
