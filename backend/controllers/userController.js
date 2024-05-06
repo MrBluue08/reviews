@@ -22,7 +22,7 @@ router.post('/registerUser',async (req, res) => {
 
 router.post('/login', async (req, res) =>{
     try{
-        const result = await User.findOne({ $or: [{email: req.body.idLog}, {username: req.body.idLog}]});
+        const result = await User.findOne({username: req.body.username});
         const correctPassword = await bcrypt.compare(req.body.password, result.password);
         if(!result || !correctPassword){
             res.status(401).send('Incorrect credentials');

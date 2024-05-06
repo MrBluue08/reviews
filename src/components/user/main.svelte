@@ -47,10 +47,6 @@
 </main>
 
 <style>
-    main{
-        padding-top: 8vh;
-    }
-
     .card {
         display: grid;
         grid-template-columns: 1;
@@ -66,12 +62,14 @@
 
     .cardInfo.txt {
         height: 100%;
-        opacity: 0; /* Start with opacity set to 0 */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0;
     }
 
     .card:hover .cardInfo.txt {
-        transition: opacity 0.3s ease; /* Transition effect for opacity */
-        display: block;
+        transition: opacity 0.3s ease; 
         opacity: 1;
     }
 

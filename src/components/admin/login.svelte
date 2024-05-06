@@ -1,24 +1,38 @@
 <script>
-    let username = '';
-    let password = '';
-  
-    function handleSubmit() {
-      // Here you can add your logic for handling form submission, like sending a request to the server
-      console.log('Username:', username);
-      console.log('Password:', password);
-      // For example, you can use fetch() to send the data to your server
+  let logError;
+  let username = '';
+  let password = '';
+  async function login(form){
+    try {
+      const response = await fetch("http://localhost:5000/user/login", {
+          method: 'POST',
+          headers: {
+              'Content-type': 'application/json'
+          },
+          body: JSON.stringify({ idLog, password })
+      });
+
+      const user = await response.json();
+      giveAuth(user);
+      hideForm(form);
+      location.reload();
+    } catch (error) {
+      logError.classList.remove('invisible');
     }
-  </script>
-  
-  <style>
-    /* You can add styles for your form here */
-  </style>
-  
-  <form on:submit|preventDefault={handleSubmit}>
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" bind:value={username}>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" bind:value={password}>
+  }
+</script>
+
+<style>
+  /* You can add styles for your form here */
+</style>
+ 
+<main>
+  <form on:submit|preventDefault={login(loginForm)}>
+    <label for="userName">User name or email:</label>
+    <input type="text" name="userName" bind:value={username} required>
+    <label for="password">Password:</label>
+    <input type="password" name="password" bind:value={password} required>
+    <label for="error" class="errorMsg invisible" bind:this={logError}>Invalid credentials</label>
     <button type="submit">Login</button>
   </form>
-  
+</main>

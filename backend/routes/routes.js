@@ -10,6 +10,8 @@ router.use('/film', filmCont);
 const adminCont = require('../controllers/adminController');
 router.use('/admin', adminCont);
 
+const reviewCont = require('../controllers/reviewController');
+router.use('/review', reviewCont);
 
 
 module.exports = router
