@@ -1,5 +1,7 @@
 <script>
     import {onMount} from 'svelte';
+    //Session variables
+    let user  = localStorage.getItem('user');
 
     let films = [];
     async function getFilms(){
@@ -46,11 +48,31 @@
 </main>
 
 <style>
+    main{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+/*Film list style*/
+    .films{
+        display: flex;
+        width: 80%;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+
+/*Indivdual film style*/
     .card {
         display: grid;
         grid-template-columns: 1;
         grid-template-rows: 1;
-        width: 25vh;
+        width: 18%;
+    }
+
+    .card > img{
+        width: 100%;
+        border-radius: 5px;
     }
 
     .cardInfo {
@@ -70,6 +92,11 @@
     .card:hover .cardInfo.txt {
         transition: opacity 0.3s ease; 
         opacity: 1;
+    }
+
+    .card:hover .cardInfo.img{
+        border-radius: 5px;
+        border: 3px solid greenyellow;
     }
 
    

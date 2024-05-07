@@ -7,6 +7,7 @@
     import LoggedHeader from "./components/user/loggedHeader.svelte";
     import NewFilm from "./components/admin/newFilm.svelte";
     import Login from "./components/admin/login.svelte";
+    import FilmList from "./components/admin/filmList.svelte";
 
     let loggedIn = checkLogged();
     let admin = checkAdmin();
@@ -20,9 +21,12 @@
     {/if}
     <Router>
         <!-- RUTAS DE ADMIN -->
-        <Route path="/adminLogin" component={Login}/>
+        {#if !loggedIn}
+            <Route path="/adminLogin" component={Login}/>
+        {/if}
         {#if admin}
             <Route path="/newFilm" component={NewFilm}/>
+            <Route path="/filmList" component={FilmList}/>
         {/if}
 
         <!-- RUTAS DE USER -->

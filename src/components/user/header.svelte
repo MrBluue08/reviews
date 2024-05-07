@@ -103,9 +103,9 @@
     <div class="popUp" bind:this={loginForm}>
         <form on:submit|preventDefault={login(loginForm)}>
             <label for="userName">User name or email:</label>
-            <input type="text" name="userName" bind:value={idLog} required>
+            <input type="text" name="userName" class="input" bind:value={idLog} required>
             <label for="password">Password:</label>
-            <input type="password" name="password" bind:value={password} required>
+            <input type="password" name="password" class="input" bind:value={password} required>
             <label for="error" class="errorMsg invisible" bind:this={logError}>Invalid credentials</label>
             <div class="submit">
                 <button type="submit">Login</button>
@@ -203,6 +203,27 @@
     .submit > button:focus {
         box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
     }
+
+    label{
+        padding-bottom: 1vh;
+    }
+
+    .input {
+        border-radius: 10px;
+        outline: 2px solid white;
+        border: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background-color: #e2e2e2;
+        outline-offset: 3px;
+        padding: 10px 1rem;
+        transition: 0.25s;
+    }
+
+    .input:focus {
+        outline-offset: 5px;
+        background-color: #fff
+    }
+
 
 
     

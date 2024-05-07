@@ -1,5 +1,8 @@
 <script>
     import {logout} from '../../../scripts/auth';
+
+
+    let admin = localStorage.getItem('admin');
 </script>
 
 <div>
@@ -10,6 +13,9 @@
             </a>
         </div>
         <div class="buttons">
+            {#if admin}
+                <button>Film list</button>
+            {/if}
             <button on:click={logout}>Log out</button>
             <button>My Profile</button>
         </div>
@@ -35,7 +41,7 @@
     .logo{
         height: 100%;
         width: auto;
-        padding-left: 15vh;
+        padding-left: 30vh;
         display: flex;
         align-items: center;
     }
@@ -49,7 +55,7 @@
 
 
     .buttons{
-        padding-right: 15vh;
+        padding-right: 30vh;
         height: 100%;
     }
 
