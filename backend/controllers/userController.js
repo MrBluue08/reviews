@@ -19,6 +19,7 @@ router.post('/registerUser',async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 })
+
 router.post('/login', async (req, res) =>{
     try{
         const result = await User.findOne({ $or: [{email: req.body.idLog}, {username: req.body.idLog}]});

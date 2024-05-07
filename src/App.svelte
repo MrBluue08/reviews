@@ -8,6 +8,7 @@
     import NewFilm from "./components/admin/newFilm.svelte";
     import Login from "./components/admin/login.svelte";
     import FilmList from "./components/admin/filmList.svelte";
+    import filmProfile from "./components/user/filmProfile.svelte";
 
     let loggedIn = checkLogged();
     let admin = checkAdmin();
@@ -30,7 +31,8 @@
         {/if}
 
         <!-- RUTAS DE USER -->
-        <Route path="" component={Main}/>
+        <Route path="/" component={Main}/>
+        <Route path="/filmProfile/:filmId" component={filmProfile}/>
     </Router>
 
 </div>

@@ -1,5 +1,6 @@
 <script>
     import {onMount} from 'svelte';
+    import { navigate } from 'svelte-navigator';
     //Session variables
     let user  = localStorage.getItem('user');
 
@@ -32,7 +33,8 @@
         <h1>Cargando</h1>
         {:then}
             {#each films as film}
-                <div class="card">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <div class="card" on:click={() => (navigate(`/filmProfile/${film._id}`))}>
                     <img src="/images/{film.poster}" alt="Poster of {film.title}" class="cardInfo img">
                     <div class="cardInfo txt">
                         <h4>{film.title}</h4>
