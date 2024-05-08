@@ -13,7 +13,7 @@
             });
             const res = await response.json();
             if (!response.ok) {
-                throw new Error('Failed to register user');
+                throw new Error('Server error');
             }
             return res;
         } catch (error) {

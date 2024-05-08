@@ -1,36 +1,124 @@
 <script>
-    import {SearchIcon} from "svelte-feather-icons";
+    import { onMount } from "svelte";
+    import {SearchIcon, EditIcon} from "svelte-feather-icons";
+    import { each } from "svelte/internal";
 
-    async function getFilms(){
-        try {
-            const response = await fetch("http://localhost:5000/film/startFilms", {
-                headers: {"Content-Type": "application/json"},
-                method: 'GET'
-            });
-            const res = await response.json();
-            if (!response.ok) {
-                throw new Error('Failed to register user');
+    let title;
+    let films = [];
+    async function getFilms(search){
+        if(search === ""){
+            try {
+                const response = await fetch("http://localhost:5000/film/startFilms", {
+                    headers: {"Content-Type": "application/json"},
+                    method: 'GET'
+                });
+                const res = await response.json();
+                if (!response.ok) {
+                    throw new Error('Failed to register user');
+                }
+                return res;
+            } catch (error) {
+                console.error('Error:', error.message);
             }
-            return res;
-        } catch (error) {
-            console.error('Error:', error.message);
+        }else{
+            try {
+                const response = await fetch(`http://localhost:5000/film/filmSearch/${search}`, {
+                    headers: {"Content-Type": "application/json"},
+                    method: 'GET'
+                });
+                const res = await response.json();
+                if (!response.ok) {
+                    throw new Error('Failed to register user');
+                }
+                return res;
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
         }
+    }
+
+    onMount(async function(){
+        films = await getFilms("");
+    })
+
+
+    async function searchFilms(search){
+        if(search !== ""){
+            title.innerHTML = "Results for '" + search + "'";
+        }else{
+            title.innerHTML = "Films";
+        }
+        films = await getFilms(search);
     }
 
 </script>
 
+
+<main>
+    <div class="list">
+        <div class="search-box">
+            <button class="btn-search">
+                <SearchIcon />
+            </button>
+            <input type="text" class="input-search" placeholder="Search for films..." on:input={(e) => searchFilms(e.target.value)}>
+        </div>
+        <h1 bind:this={title}>Films</h1>
+        <ul class="films">
+            {#await films}
+                <h1>Searching for films</h1>
+            {:then} 
+                {#each films as film}
+                    <li class="film">
+                        {film.title}
+                        <button>
+                            <EditIcon/>
+                        </button>
+                    </li>
+                {/each}
+            {:catch error}
+                <h1>{error}</h1>
+            {/await}
+        </ul>
+    </div>
+</main>
+
 <style>
     main{
+        padding-top: 10vh;
         display: flex;
         justify-content: center;
+        color: white;
     }
     .list{
         width: 60%;
+    }
+    .films{
+        padding: 1vh 0 0 0;
+        list-style: none;
+        border-top: white 1px solid;
+    }
+
+    .film{
+        height: 3vh;
+        padding-left: 1vw;
+        margin-bottom: 1vh;
+        background-color: #22a6b3;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    li > button{     
+        border: none;
+        outline: none;
+        background-color: transparent;
     }
 
 
     /* Stolen searchbar style */
     .search-box{
+        width: 100%;
+        float: right;
         width: fit-content;
         height: fit-content;
         position: relative;
@@ -47,7 +135,7 @@
         transition: all .5s ease-in-out;
         background-color: #22a6b3;
         padding-right: 40px;
-        color:red;
+        color:white;
     }
     .input-search::placeholder{
         color:rgba(255,255,255,.5);
@@ -86,14 +174,3 @@
     }
     
 </style>
-
-<main>
-    <div class="list">
-        <div class="search-box">
-            <button class="btn-search">
-                <SearchIcon />
-            </button>
-            <input type="text" class="input-search" placeholder="Type to Search...">
-        </div>
-    </div>
-</main>
