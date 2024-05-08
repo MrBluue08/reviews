@@ -1,37 +1,46 @@
 <script>
-    import {logout} from '../../../scripts/auth';
+    import {checkAdmin, logout} from '../../../scripts/auth';
+    import { navigate } from 'svelte-navigator';
 
 
-    let admin = localStorage.getItem('admin');
+    let admin = checkAdmin();
 </script>
 
 <div>
-    <div class="navbar">
-        <div class="logo">
-            <a href="http://">
-                PicturePulse
-            </a>
-        </div>
-        <div class="buttons">
-            {#if admin}
-                <button>Film list</button>
-            {/if}
-            <button on:click={logout}>Log out</button>
-            <button>My Profile</button>
+    <div class="header">
+        <div class="navbar">
+            <div class="logo">
+                <button on:click={() => (navigate(`/`))}>
+                    PicturePulse
+                </button>
+            </div>
+            <div class="buttons">
+                {#if admin}
+                    <button on:click={() => (navigate(`/filmList`))}>Film list</button>
+                {/if}
+                <button on:click={logout}>Log out</button>
+                <button>My Profile</button>
+            </div>
         </div>
     </div>
 </div>
 
 
 <style>
-     /*Styles for the navbar*/
-     .navbar {
+    /*Styles for the navbar*/
+    .header{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .navbar {
         background-color: #2C3E50;
         overflow: hidden;
         position: fixed;
         top: 0;
         height: 8vh;
-        width: 100%;
+        width: 60%;
         display: flex;
         justify-content: space-between;
         z-index: 9;
@@ -41,12 +50,11 @@
     .logo{
         height: 100%;
         width: auto;
-        padding-left: 30vh;
         display: flex;
         align-items: center;
     }
 
-    .logo > a {
+    .logo > button {
         color: white;
         width: auto;
         text-decoration: none;
@@ -55,7 +63,6 @@
 
 
     .buttons{
-        padding-right: 30vh;
         height: 100%;
     }
 

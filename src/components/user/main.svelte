@@ -50,15 +50,15 @@
 </main>
 
 <style>
+
     main{
-        width: 100%;
         display: flex;
         justify-content: center;
     }
 /*Film list style*/
     .films{
         display: flex;
-        width: 80%;
+        width: 60%;
         justify-content: space-around;
         flex-wrap: wrap;
     }
@@ -69,7 +69,8 @@
         display: grid;
         grid-template-columns: 1;
         grid-template-rows: 1;
-        width: 18%;
+        width: 15vw;
+        
     }
 
     .card > img{

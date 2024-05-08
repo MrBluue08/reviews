@@ -1,4 +1,5 @@
 <script>
+  import { navigate } from "svelte-navigator";
   import { giveAdmin } from "../../../scripts/auth";
 
   let logError;

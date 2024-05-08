@@ -22,7 +22,7 @@
     {/if}
     <Router>
         <!-- RUTAS DE ADMIN -->
-        {#if !loggedIn}
+        {#if !loggedIn || (loggedIn && admin)}
             <Route path="/adminLogin" component={Login}/>
         {/if}
         {#if admin}

@@ -1,4 +1,4 @@
-
+import { navigate } from "svelte-navigator";
 // authService
 export async function giveAuth(user){
     localStorage.setItem('user', JSON.stringify(user));
@@ -13,6 +13,7 @@ export async function giveAdmin(user){
     localStorage.setItem('admin', true);
 
 
+    navigate("/");
     location.reload();
 
 }
