@@ -1,5 +1,6 @@
 <script>
     import {giveAuth} from '../../../scripts/auth';
+    import { navigate } from 'svelte-navigator';
 
 
 
@@ -71,15 +72,17 @@
 
 
 <div>
-    <div class="navbar">
-        <div class="logo">
-            <a href="http://">
-                PicturePulse
-            </a>
-        </div>
-        <div class="buttons">
-            <button on:click={() => { showForm(registerForm); hideForm(loginForm); }}>Sign Up</button>
-            <button on:click={() => { showForm(loginForm), hideForm(registerForm); }}>Sign In</button>
+    <div class="header">
+        <div class="navbar">
+            <div class="logo">
+                <button on:click={() => (navigate(`/`))}>
+                    PicturePulse
+                </button>
+            </div>
+            <div class="buttons">
+                <button on:click={() => { showForm(registerForm); hideForm(loginForm); }}>Sign Up</button>
+                <button on:click={() => { showForm(loginForm), hideForm(registerForm); }}>Sign In</button>
+            </div>
         </div>
     </div>
     
@@ -228,13 +231,19 @@
 
     
     /*Styles for the navbar*/
+    .header{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
     .navbar {
         background-color: #2C3E50;
         overflow: hidden;
         position: fixed;
         top: 0;
         height: 8vh;
-        width: 100%;
+        width: 60%;
         display: flex;
         justify-content: space-between;
         z-index: 9;
@@ -244,12 +253,11 @@
     .logo{
         height: 100%;
         width: auto;
-        padding-left: 15vh;
         display: flex;
         align-items: center;
     }
 
-    .logo > a {
+    .logo > Button {
         color: white;
         width: auto;
         text-decoration: none;
@@ -258,7 +266,6 @@
 
 
     .buttons{
-        padding-right: 15vh;
         height: 100%;
     }
 
