@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import {SearchIcon, EditIcon} from "svelte-feather-icons";
+    import {SearchIcon, EditIcon, PlusIcon} from "svelte-feather-icons";
+    import { navigate } from "svelte-navigator";
     import { each } from "svelte/internal";
 
     let title;
@@ -56,11 +57,18 @@
 
 <main>
     <div class="list">
-        <div class="search-box">
-            <button class="btn-search">
-                <SearchIcon />
-            </button>
-            <input type="text" class="input-search" placeholder="Search for films..." on:input={(e) => searchFilms(e.target.value)}>
+        <div class="buttons">
+            <div class="search-box">
+                <button class="btn-search">
+                    <SearchIcon />
+                </button>
+                <input type="text" class="input-search" placeholder="Search for films..." on:input={(e) => searchFilms(e.target.value)}>
+            </div>
+            <div>
+                <button class="btn-add" on:click={() => navigate('/newFilm')}>
+                    <PlusIcon/>
+                </button>
+            </div>
         </div>
         <h1 bind:this={title}>Films</h1>
         <ul class="films">
@@ -69,7 +77,7 @@
             {:then} 
                 {#each films as film}
                     <li class="film">
-                        {film.title}
+                        <p>{film.title}</p>
                         <button>
                             <EditIcon/>
                         </button>
@@ -106,19 +114,44 @@
         border-radius: 10px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
-    li > button{     
+    .film > button{
+        padding: 0;
+        margin: 0;
+        color: white;
+    }
+    button{     
         border: none;
         outline: none;
         background-color: transparent;
+        cursor: pointer;
+
     }
 
+    .buttons{
+        width: 100%;
+        display: flex;
+        justify-content: right;
+    }
+
+    .btn-add{
+        background-color: #22a6b3;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        color: white;
+    }
+
+    .btn-add:hover{
+        border: solid 2px white;
+    }
 
     /* Stolen searchbar style */
     .search-box{
+        margin-right: 1vh;
         width: 100%;
-        float: right;
         width: fit-content;
         height: fit-content;
         position: relative;
@@ -142,6 +175,9 @@
         font-size: 18px;
         letter-spacing: 2px;
         font-weight: 100;
+    }
+    .btn-search:hover{
+        border: solid 2px white;
     }
     .btn-search{
         width: 50px;

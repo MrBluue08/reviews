@@ -41,5 +41,6 @@ export function logout() {
     if(localStorage.getItem('admin')){
         localStorage.removeItem('admin');
     }
+    navigate("/");
     location.reload();
 }
