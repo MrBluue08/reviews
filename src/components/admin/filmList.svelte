@@ -2,44 +2,12 @@
     import { onMount } from "svelte";
     import {SearchIcon, EditIcon, PlusIcon} from "svelte-feather-icons";
     import { navigate } from "svelte-navigator";
-    import { each } from "svelte/internal";
-
+    import {filmSearcher} from '../../../scripts/searcherFilms';
     let title;
     let films = [];
-    async function getFilms(search){
-        if(search === ""){
-            try {
-                const response = await fetch("http://localhost:5000/film/startFilms", {
-                    headers: {"Content-Type": "application/json"},
-                    method: 'GET'
-                });
-                const res = await response.json();
-                if (!response.ok) {
-                    throw new Error('Failed to register user');
-                }
-                return res;
-            } catch (error) {
-                console.error('Error:', error.message);
-            }
-        }else{
-            try {
-                const response = await fetch(`http://localhost:5000/film/filmSearch/${search}`, {
-                    headers: {"Content-Type": "application/json"},
-                    method: 'GET'
-                });
-                const res = await response.json();
-                if (!response.ok) {
-                    throw new Error('Failed to register user');
-                }
-                return res;
-            } catch (error) {
-                console.error('Error:', error.message);
-            }
-        }
-    }
-
+    
     onMount(async function(){
-        films = await getFilms("");
+        films = await filmSearcher("");
     })
 
 
@@ -49,7 +17,7 @@
         }else{
             title.innerHTML = "Films";
         }
-        films = await getFilms(search);
+        films = await filmSearcher(search);
     }
 
 </script>
