@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const film = require('../models/films');
 
+function reviewCount(films){
+    films.forEach(film => {
+        //Luego vengo
+    });
+}
+
 router.get('/startFilms', async (req, res) => {
     try {
         let films = await film.find({}).exec();

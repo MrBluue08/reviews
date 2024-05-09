@@ -52,6 +52,7 @@
 <style>
 
     main{
+        padding-top: 12vh;
         display: flex;
         justify-content: center;
     }
@@ -59,7 +60,7 @@
     .films{
         display: flex;
         width: 60%;
-        justify-content: space-around;
+        justify-content: center;
         flex-wrap: wrap;
     }
 
@@ -69,7 +70,8 @@
         display: grid;
         grid-template-columns: 1;
         grid-template-rows: 1;
-        width: 15vw;
+        width: 8vw;
+        padding: 0 0.5vh 1vh 0.5vh;
         
     }
 
