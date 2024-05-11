@@ -1,6 +1,10 @@
 <script>
-    let preview;
+    const multer = require('multer');
+    const upload = multer({ dest: '../../public/images'})
+    //form Variables
+    let title, director, sinopsis, releaseDate;
     let imgInput
+    let preview;
 
     function displayImg() {
         let photo = imgInput.files[0];
@@ -13,29 +17,33 @@
         
         reader.readAsDataURL(photo);
     }
+
+    async function addFilm(){
+
+    }
 </script>
 
 <main> 
     <div class="container">
-        <form action="submit_movie.php" method="post" enctype="multipart/form-data">
+        <form  on:submit|preventDefault={addFilm}  enctype="multipart/form-data">
             <div class="title">
                 <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
+                <input type="text" id="title" name="title" bind:this={title} required>
             </div>
     
             <div class="director">
                 <label for="director">Director:</label>
-                <input type="text" id="director" name="director" required>
+                <input type="text" id="director" name="director" bind:this={director} required>
             </div>
     
             <div class="releaseDate">
                 <label for="release_year">Release Year:</label>
-                <input type="date" id="release_year" name="release_year" required>
+                <input type="date" id="release_year" name="release_year" bind:this={releaseDate} required>
             </div>
     
             <div class="synopsis">
                 <label for="synopsis">Synopsis:</label>
-                <textarea id="synopsis" name="synopsis" rows="4" required></textarea>
+                <textarea id="synopsis" name="synopsis" rows="4" bind:this={sinopsis} required></textarea>
             </div>
     
             <div class="img">
