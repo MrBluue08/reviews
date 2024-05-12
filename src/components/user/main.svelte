@@ -25,8 +25,6 @@
     }
 
     const getImageUrl = (path) => {
-        console.log(path);
-        console.log(`http://localhost:5000${path}`);
         return `http://localhost:5000${path}`;
     };
    
@@ -92,10 +90,10 @@
 
 /*Indivdual film style*/
     .card {
+        width: 8vw;
         display: grid;
         grid-template-columns: 1;
         grid-template-rows: 1;
-        width: 8vw;
         padding: 0 0.5vh 1vh 0.5vh;
         
     }

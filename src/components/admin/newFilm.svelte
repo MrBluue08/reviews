@@ -1,6 +1,6 @@
 <script>
-    const multer = require('multer');
-    const upload = multer({ dest: '../../public/images'})
+    // const multer = require('multer');
+    // const upload = multer({ dest: '../../public/images'})
     //form Variables
     let title, director, sinopsis, releaseDate;
     let imgInput

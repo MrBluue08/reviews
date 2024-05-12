@@ -26,7 +26,28 @@
         
     })
 
+    const getImageUrl = (path) => {
+        return `http://localhost:5000${path}`;
+    };
+
 </script>
+
+
+<main>
+    {#await film}
+    <h1>Cargando</h1>
+    {:then}
+    <div class="film">
+        <img src="{getImageUrl('/uploads/'+film.poster)}" alt="Poster of {film.title}" class="cardInfo img">
+        <h1>{film.title}</h1>
+        <h3>{film.releaseDate} Directed by {film.director}</h3>
+        <p>{film.sinopsis}</p>
+    </div>
+    {:catch error}
+        <h1>{error}</h1>
+    {/await}
+
+</main>
 
 <style>
     main{
@@ -46,19 +67,3 @@
         border-radius: 5px;
     }
 </style>
-
-<main>
-    {#await film}
-    <h1>Cargando</h1>
-    {:then}
-    <div class="film">
-        <img src="/images/{film.poster}" alt="Poster of {film.title}" class="cardInfo img">
-        <h1>{film.title}</h1>
-        <h3>{film.releaseDate} Directed by {film.director}</h3>
-        <p>{film.sinopsis}</p>
-    </div>
-    {:catch error}
-        <h1>{error}</h1>
-    {/await}
-
-</main>
