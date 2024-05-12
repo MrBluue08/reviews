@@ -24,6 +24,11 @@
         }
     }
 
+    const getImageUrl = (path) => {
+        console.log(path);
+        console.log(`http://localhost:5000${path}`);
+        return `http://localhost:5000${path}`;
+    };
    
     onMount(async function(){
         films = await getFilms();
@@ -49,7 +54,7 @@
                 {#each films as film}
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <div class="card" on:click={() => (navigate(`/filmProfile/${film._id}`))}>
-                        <img src="/images/{film.poster}" alt="Poster of {film.title}" class="cardInfo img">
+                        <img src="{getImageUrl('/uploads/'+film.poster)}" alt="Poster of {film.title}" class="cardInfo img">
                         <div class="cardInfo txt">
                             <h4>{film.title}</h4>
                         </div>
