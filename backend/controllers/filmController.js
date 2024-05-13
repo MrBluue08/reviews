@@ -1,8 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const upload = multer({dest: './backend/uploads'});
 const Film = require('../models/films');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({storage: storage});
+
+router.post('/upload', upload.single('img'), (req, res) => {
+    res.send('Image uploaded');
+})
 
 function reviewCount(films){
     films.forEach(film => {
@@ -40,9 +54,6 @@ router.get('/filmSearch/:search', async (req,res) => {
     }
 });
 
-router.post('/upload', upload.single('img'), (req, res) => {
-    res.status(200).send('Image uploaded succesfully'); 
-});
 
 router.post('/addFilm', async(req, res) => {
     try{

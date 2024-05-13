@@ -1,7 +1,4 @@
 <script>
-    // const multer = require('multer');
-    // const upload = multer({ dest: '../../public/images'})
-
     //form Variables
     let title, director, sinopsis, releaseDate;
     let imgInput;
@@ -11,7 +8,7 @@
         console.log(str);
         let words = str.split(" ");
         let result = words.map(word => word.toLowerCase()).join("_");
-        result += "_poster";
+        result += "_poster.jpg";
         return result;
     }
 
@@ -44,11 +41,12 @@
                 throw new Error('Failed to add new film');
             }else{
                 const formData = new FormData();
-                formData.append('img', imgInput);
+                formData.append('img', photo);
                 const uploadedPoster = await fetch("http://localhost:5000/film/upload", {
-                    method: 'POST',
-                    body: formData
+                     method: 'POST',
+                     body: formData
                 });
+                console.log(uploadedPoster)
             }
         } catch (error) {
             console.error('Error:', error.message);
