@@ -1,4 +1,6 @@
 <script>
+    import { navigate } from "svelte-navigator";
+
     //form Variables
     let title, director, sinopsis, releaseDate;
     let imgInput;
@@ -46,7 +48,8 @@
                      method: 'POST',
                      body: formData
                 });
-                console.log(uploadedPoster)
+                navigate('/');
+
             }
         } catch (error) {
             console.error('Error:', error.message);

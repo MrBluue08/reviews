@@ -75,8 +75,9 @@
     <div class="header">
         <div class="navbar">
             <div class="logo">
-                <button on:click={() => (navigate(`/`))}>
-                    PicturePulse
+                <button on:click={() => (navigate(`/`))} class="logo">
+                    <img src="/logo/logo.png" alt="">
+                    <div>PicturePulse</div>
                 </button>
             </div>
             <div class="buttons">
@@ -230,8 +231,8 @@
 
 
     
-    /*Styles for the navbar*/
-    .header{
+   /*Styles for the navbar*/
+   .header{
         width: 100%;
         display: flex;
         justify-content: center;
@@ -245,41 +246,41 @@
         height: 8vh;
         width: 60%;
         display: flex;
+        align-items: center;
         justify-content: space-between;
         z-index: 9;
     }
-
-
+    
+   
+    
+    .navbar button {
+        color: white;
+        padding: 14px 20px;
+        background-color: transparent;
+        border: none;
+        border-radius: 0%;
+    }
+    
     .logo{
         height: 100%;
+        color: white;
         width: auto;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: large;
+        margin-left: 0;
+        padding-left: 0;
         display: flex;
         align-items: center;
     }
 
-    .logo > Button {
-        color: white;
-        width: auto;
-        text-decoration: none;
-     
-    }
-
-
-    .buttons{
+    .logo > img{
+        float: left;
         height: 100%;
     }
 
-    .navbar button {
-        float: right;
-        height: 100%;
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 20px;
-        text-decoration: none;
-        background-color: transparent;
-        border: none;
-        border-radius: 0%;
+    .logo > div{
+        float: left;
     }
     
     .navbar button:hover {
