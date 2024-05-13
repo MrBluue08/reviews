@@ -1,10 +1,19 @@
 <script>
     // const multer = require('multer');
     // const upload = multer({ dest: '../../public/images'})
+
     //form Variables
     let title, director, sinopsis, releaseDate;
-    let imgInput
+    let imgInput;
     let preview;
+
+    function changeFileName(str) {
+        console.log(str);
+        let words = str.split(" ");
+        let result = words.map(word => word.toLowerCase()).join("_");
+        result += "_poster";
+        return result;
+    }
 
     function displayImg() {
         let photo = imgInput.files[0];
@@ -19,7 +28,31 @@
     }
 
     async function addFilm(){
+        try {
+            let photo = new File([imgInput.files[0]], changeFileName(title), {type: file.type} );
+            let imgName = photo.name;
+            const response = await fetch("http://localhost:5000/film/addFilm", {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ title, director, sinopsis, releaseDate, imgName })
+            });
 
+            const film = await response.json();
+            if (!response.ok) {
+                throw new Error('Failed to add new film');
+            }else{
+                const formData = new FormData();
+                formData.append('img', imgInput);
+                const uploadedPoster = await fetch("http://localhost:5000/film/upload", {
+                    method: 'POST',
+                    body: formData
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
     }
 </script>
 
@@ -28,22 +61,22 @@
         <form  on:submit|preventDefault={addFilm}  enctype="multipart/form-data">
             <div class="title">
                 <label for="title">Title:</label>
-                <input type="text" id="title" name="title" bind:this={title} required>
+                <input type="text" id="title" name="title" bind:value={title} required>
             </div>
     
             <div class="director">
                 <label for="director">Director:</label>
-                <input type="text" id="director" name="director" bind:this={director} required>
+                <input type="text" id="director" name="director" bind:value={director} required>
             </div>
     
             <div class="releaseDate">
                 <label for="release_year">Release Year:</label>
-                <input type="date" id="release_year" name="release_year" bind:this={releaseDate} required>
+                <input type="date" id="release_year" name="release_year" bind:value={releaseDate} required>
             </div>
     
             <div class="synopsis">
                 <label for="synopsis">Synopsis:</label>
-                <textarea id="synopsis" name="synopsis" rows="4" bind:this={sinopsis} required></textarea>
+                <textarea id="synopsis" name="synopsis" rows="4" bind:value={sinopsis} required></textarea>
             </div>
     
             <div class="img">

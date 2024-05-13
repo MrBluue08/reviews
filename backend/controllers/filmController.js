@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const upload = multer({dest: './backend/uploads'});
 const Film = require('../models/films');
 
 function reviewCount(films){
@@ -38,15 +40,20 @@ router.get('/filmSearch/:search', async (req,res) => {
     }
 });
 
+router.post('/upload', upload.single('img'), (req, res) => {
+    res.status(200).send('Image uploaded succesfully'); 
+});
+
 router.post('/addFilm', async(req, res) => {
     try{
         let result = await Film.findOne({"title": req.body.title}).exec();
-        if(result !== null){
+        console.log(result);
+        if(!result){
             const film = new Film({
                 title: req.body.title,
                 sinopsis: req.body.sinopsis,
                 director: req.body.director,
-                poster: req.body.poster,
+                poster: req.body.imgName,
                 releaseDate: req.body.releaseDate
             });
             await film.save();
