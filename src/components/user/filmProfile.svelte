@@ -1,6 +1,8 @@
 <script>
     import {checkAdmin, checkLogged} from '../../../scripts/auth';
     import {onMount} from 'svelte';
+    import {Rating} from 'flowbite-svelte';
+
     export let filmId;
     let admin = checkAdmin();
     let logged = checkLogged();
@@ -74,7 +76,7 @@
                 <p class="sinopsis">{film.sinopsis}</p>
             </div>
             {#if !admin && logged}
-            <form class="review">
+            <form class="reviewInput">
                 <h2>Share your opinion!</h2>
                 <div class="rate">
                     <input type="radio" id="star5" name="rate" value="5" on:change={setStarVal()}/>
@@ -103,8 +105,10 @@
         <h1>Cargando reviews</h1>
     {:then} 
         {#each reviews as review}
-        <div>
+        <div class="review">
             <p>{review.text}</p>
+            <h4>{review.user}</h4>
+            <Rating total={5} rating={review.rating}/>
         </div>
         {/each}
     {/await}
@@ -151,12 +155,12 @@
         grid-column-end: 3;
     }
 
-    .review{
+    .reviewInput{
         grid-column-start: 1;
         grid-column-start: 2;
     }
 
-    .review > h2{
+    .reviewInput > h2{
         margin-bottom: 0;
     }
 
@@ -172,6 +176,17 @@
     /*Style for review list*/
     .reviews{
         width: 60%;
+        padding-top: 4vh;
+    }
+
+    .review{
+        border-bottom: solid 1px #5d94a2;
+        font-size: larger;
+        font-weight: 200;
+    }
+
+    Rating{
+        color: #00ff59;
     }
 
     /*Stolen button style*/
@@ -221,7 +236,7 @@
         white-space:nowrap;
         cursor:pointer;
         font-size:30px;
-        color:#ccc;
+        color:#white;
     }
     .rate:not(:checked) > label:before {
         content: '★ ';

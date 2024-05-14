@@ -25,6 +25,8 @@
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "flowbite": "^2.3.0",
+    "flowbite-svelte": "^0.46.1",
     "husky": "^9.0.11",
     "is-ci": "^3.0.1",
     "mongoose": "^8.3.2",
