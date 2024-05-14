@@ -236,7 +236,7 @@
         white-space:nowrap;
         cursor:pointer;
         font-size:30px;
-        color:#white;
+        color:white;
     }
     .rate:not(:checked) > label:before {
         content: '★ ';
