@@ -28,7 +28,7 @@
     let reviews = [];
     async function getReviews(){
         try {
-            const response = await fetch(`http://localhost:5000/review/getReviews/film/${film.name}`, {
+            const response = await fetch(`http://localhost:5000/review/getReviews/film/${film.title}`, {
                 headers: {"Content-Type": "application/json"},
                 method: 'GET'
             });
@@ -98,18 +98,31 @@
         <h1>{error}</h1>
     {/await}
 
-    <div></div>
+    <div class="reviews">
+    {#await reviews}
+        <h1>Cargando reviews</h1>
+    {:then} 
+        {#each reviews as review}
+        <div>
+            <p>{review.text}</p>
+        </div>
+        {/each}
+    {/await}
+    </div>
 
 </main>
 
 <style>
-    main{
+    main {
         padding-top: 15vh;
         width: 100%;
         display: flex;
         justify-content: center;
+        align-items: center;
+        flex-direction: column;
         color: white;
     }
+
 
     .film  {
         width: 60%;
@@ -152,6 +165,13 @@
         height: 30vh;
         background-color: #5d94a2;
         color: white;
+        resize: none;
+    }
+
+
+    /*Style for review list*/
+    .reviews{
+        width: 60%;
     }
 
     /*Stolen button style*/
