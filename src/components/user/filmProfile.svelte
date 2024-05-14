@@ -4,7 +4,10 @@
     export let filmId;
     let admin = checkAdmin();
     let logged = checkLogged();
-     
+    
+    //review variables
+    let rating = 0;
+
     let film = {};
     async function getFilm(){
         try {
@@ -22,11 +25,33 @@
         }
     }
 
+    let reviews = [];
+    async function getReviews(){
+        try {
+            const response = await fetch(`http://localhost:5000/review/getReviews/film/${film.name}`, {
+                headers: {"Content-Type": "application/json"},
+                method: 'GET'
+            });
+            const res = await response.json();
+            if (!response.ok) {
+                throw new Error('Server error');
+            }
+            return res;
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+    function setStarVal(e){
+
+    }
+
     onMount(async function(){
         film = await getFilm();
         film.releaseDate = new Date(film.releaseDate);
         film.releaseDate = film.releaseDate.getFullYear();
-        
+
+        reviews = await getReviews();
     })
 
     const getImageUrl = (path) => {
@@ -43,34 +68,37 @@
     <div class="film">
         <img src="{getImageUrl('/uploads/'+film.poster)}" alt="Poster of {film.title}" class="cardInfo img">
         <div>
-            <h1 class="title">{film.title}</h1>
-            <h3 class="addInfo">{film.releaseDate} Directed by {film.director}</h3>
-            <p class="sinopsis">{film.sinopsis}</p>
-
+            <div class="info">
+                <h1 class="title">{film.title}</h1>
+                <h3 class="addInfo">{film.releaseDate} Directed by {film.director}</h3>
+                <p class="sinopsis">{film.sinopsis}</p>
+            </div>
             {#if !admin && logged}
-                <form class="review">
-                    <h2>Share your opinion!</h2>
-                    <div class="rate">
-                        <input type="radio" id="star5" name="rate" value="5" />
-                        <label for="star5" title="text">5 stars</label>
-                        <input type="radio" id="star4" name="rate" value="4" />
-                        <label for="star4" title="text">4 stars</label>
-                        <input type="radio" id="star3" name="rate" value="3" />
-                        <label for="star3" title="text">3 stars</label>
-                        <input type="radio" id="star2" name="rate" value="2" />
-                        <label for="star2" title="text">2 stars</label>
-                        <input type="radio" id="star1" name="rate" value="1" />
-                        <label for="star1" title="text">1 star</label>
-                    </div>
-                    <textarea class="reviewTxt"></textarea>
-                    <button type="submit" class="publish">Publish</button>                
-                </form>
+            <form class="review">
+                <h2>Share your opinion!</h2>
+                <div class="rate">
+                    <input type="radio" id="star5" name="rate" value="5" on:change={setStarVal()}/>
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                </div>
+                <textarea class="reviewTxt"></textarea>
+                <button type="submit" class="publish">Publish</button>                
+            </form>
             {/if}
         </div>
     </div>
     {:catch error}
         <h1>{error}</h1>
     {/await}
+
+    <div></div>
 
 </main>
 
@@ -82,6 +110,7 @@
         justify-content: center;
         color: white;
     }
+
     .film  {
         width: 60%;
         display: grid;
@@ -94,10 +123,30 @@
         border-radius: 5px;
     }
 
+    .info{
+        display: grid;
+        grid-template-columns: 30% 65%;
+        grid-gap: 5%;
+    }
+
+    .addInfo, .title{
+        align-self: center;
+    }
+
+    .sinopsis{
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
     .review{
         grid-column-start: 1;
         grid-column-start: 2;
     }
+
+    .review > h2{
+        margin-bottom: 0;
+    }
+
     .reviewTxt{
         width: 100%;
         height: 30vh;

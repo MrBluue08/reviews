@@ -16,7 +16,7 @@ const reviewSchema = new schema(
             type:String,
             required:true,
         },
-        poster:{
+        text:{
             type:String,
             required:true
         },
