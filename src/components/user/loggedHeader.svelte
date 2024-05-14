@@ -1,9 +1,10 @@
 <script>
-    import {checkAdmin, logout} from '../../../scripts/auth';
+    import {checkAdmin, logout, getUser} from '../../../scripts/auth';
     import { navigate } from 'svelte-navigator';
 
 
     let admin = checkAdmin();
+    let user = getUser();
 </script>
 
 <div>
@@ -19,7 +20,7 @@
                 {/if}
                 <button on:click={logout}>Log out</button>
                 {#if !admin}
-                    <button>My Profile</button>
+                    <button>{user.username}</button>
                 {/if}
             </div>
         </div>

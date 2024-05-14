@@ -18,6 +18,9 @@ export async function giveAdmin(user){
 
 }
 
+export function getUser(){
+    return JSON.parse(localStorage.getItem('user'));
+}
 
 export function checkLogged(){
     if(localStorage.getItem('user') && localStorage.getItem('auth')){
@@ -41,6 +44,5 @@ export function logout() {
     if(localStorage.getItem('admin')){
         localStorage.removeItem('admin');
     }
-    navigate("/");
     location.reload();
 }

@@ -19,7 +19,8 @@ const reviewSchema = new schema(
         poster:{
             type:String,
             required:true
-        }
+        },
+        createdAt: {type: Date, default: Date.now}
     }
 )
 
