@@ -19,10 +19,10 @@ router.get('/getReviews/:type/:id', async (req, res) => {
 router.post('/postReview', async(req, res) => {
     try{
         const review = new Review({
-            user: req.body.user,
-            film: req.body.film,
+            user: req.body.userName,
+            film: req.body.movie,
             rating: req.body.rating,
-            text: req.body.text,
+            text: req.body.reviewTxt,
             createdAt: Date.now()
         });
         await review.save();

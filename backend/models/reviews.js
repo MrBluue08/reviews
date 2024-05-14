@@ -18,7 +18,7 @@ const reviewSchema = new schema(
         },
         text:{
             type:String,
-            required:true
+            required:true,
         },
         createdAt: {type: Date, default: Date.now}
     }

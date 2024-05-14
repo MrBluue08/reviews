@@ -1,14 +1,16 @@
 <script>
-    import {checkAdmin, checkLogged} from '../../../scripts/auth';
+    import {checkAdmin, checkLogged, getUser} from '../../../scripts/auth';
     import {onMount} from 'svelte';
     import {Rating} from 'flowbite-svelte';
 
     export let filmId;
+    let user = getUser();
     let admin = checkAdmin();
     let logged = checkLogged();
     
     //review variables
     let rating = 0;
+    let reviewTxt;
 
     let film = {};
     async function getFilm(){
@@ -44,8 +46,26 @@
         }
     }
 
-    function setStarVal(e){
+    async function postReview(){
+        let movie = film.title;
+        let userName = user.username;
+        try {
+            const response = await fetch("http://localhost:5000/review/postReview", {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ movie, userName, rating, reviewTxt })
+            });
 
+            if (!response.ok) {
+                throw new Error('Failed to post review');
+            }
+
+            location.reload();
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
     }
 
     onMount(async function(){
@@ -76,21 +96,21 @@
                 <p class="sinopsis">{film.sinopsis}</p>
             </div>
             {#if !admin && logged}
-            <form class="reviewInput">
+            <form on:submit|preventDefault={postReview} class="reviewInput">
                 <h2>Share your opinion!</h2>
                 <div class="rate">
-                    <input type="radio" id="star5" name="rate" value="5" on:change={setStarVal()}/>
+                    <input type="radio" id="star5" name="rate" value="5" bind:group={rating}/>
                     <label for="star5" title="text">5 stars</label>
-                    <input type="radio" id="star4" name="rate" value="4" />
+                    <input type="radio" id="star4" name="rate" value="4" bind:group={rating}/>
                     <label for="star4" title="text">4 stars</label>
-                    <input type="radio" id="star3" name="rate" value="3" />
+                    <input type="radio" id="star3" name="rate" value="3" bind:group={rating}/>
                     <label for="star3" title="text">3 stars</label>
-                    <input type="radio" id="star2" name="rate" value="2" />
+                    <input type="radio" id="star2" name="rate" value="2" bind:group={rating}/>
                     <label for="star2" title="text">2 stars</label>
-                    <input type="radio" id="star1" name="rate" value="1" />
+                    <input type="radio" id="star1" name="rate" value="1" bind:group={rating}/>
                     <label for="star1" title="text">1 star</label>
                 </div>
-                <textarea class="reviewTxt"></textarea>
+                <textarea class="reviewTxt" bind:value={reviewTxt}></textarea>
                 <button type="submit" class="publish">Publish</button>                
             </form>
             {/if}
@@ -177,16 +197,13 @@
     .reviews{
         width: 60%;
         padding-top: 4vh;
+        padding-bottom: 4vh;
     }
 
     .review{
         border-bottom: solid 1px #5d94a2;
         font-size: larger;
         font-weight: 200;
-    }
-
-    Rating{
-        color: #00ff59;
     }
 
     /*Stolen button style*/
