@@ -54,6 +54,7 @@ router.post('/postReview', async(req, res) => {
             film: req.body.movie,
             rating: req.body.rating,
             text: req.body.reviewTxt,
+            likes: [],
             createdAt: Date.now()
         });
         await review.save();
@@ -61,6 +62,41 @@ router.post('/postReview', async(req, res) => {
     }catch (err) {
         console.error(err);
         res.status(500).send("Internal server error");
+    }
+})
+
+router.post('/like', async (req, res) => {
+    const user = req.body.userId;
+    const reviewId = req.body.review;
+    try {
+        const review = await Review.findById(reviewId);
+
+        if (!review) {
+            return res.status(404).json({ message: 'Review not found' });
+        }
+
+        if (review.likes.includes(user)) {
+            let index = review.likes.indexOf(user);
+            review.likes.splice(index, 1);
+        }else{
+            review.likes.push(user);
+        }
+
+        await review.save();
+
+        res.status(200).json({ message: 'Review liked', review });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+router.delete('/dropReview', async (req, res) => {
+    try {
+        const reviewId = req.body.review;
+        await Review.findByIdAndDelete(reviewId);
+        res.status(200).send('Review dropped');
+    } catch (error) {
+        console.error(error);
     }
 })
 

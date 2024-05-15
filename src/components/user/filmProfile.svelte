@@ -2,6 +2,8 @@
     import {checkAdmin, checkLogged, getUser} from '../../../scripts/auth';
     import {onMount} from 'svelte';
     import {Rating} from 'flowbite-svelte';
+    import {TrashIcon} from "svelte-feather-icons";
+
 
     export let filmId;
     let user = getUser();
@@ -68,6 +70,47 @@
         }
     }
 
+    async function likeReview(review){
+        try {
+            let userId = user.username;
+            const response = await fetch("http://localhost:5000/review/like", {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ userId, review})
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to post review');
+            }
+
+            reviews = await getReviews();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function dropReview(review){
+        try {
+            const response = await fetch("http://localhost:5000/review/dropReview", {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({review})
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to post review');
+            }
+
+            reviews = await getReviews();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     onMount(async function(){
         film = await getFilm();
         film.releaseDate = new Date(film.releaseDate);
@@ -127,8 +170,38 @@
         {#each reviews as review}
         <div class="review">
             <p>{review.text}</p>
-            <h4>{review.user}</h4>
             <Rating total={5} rating={review.rating}/>
+            <div>
+                <h4>{review.user}</h4>
+
+                {#if logged}
+                    {#if admin}
+                    <button on:click={dropReview(review._id)} class="delete">
+                        <p>Delete review</p>
+                        <TrashIcon />
+                    </button>
+                    {:else}
+                    <p>{review.likes.length}</p>
+                    <button on:click={likeReview(review._id)} class="like">
+                        {#if review.likes.includes(user.username)}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#00ff59" stroke="#5d94a2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up">
+                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                        </svg>
+                        {:else}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5d94a2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up">
+                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                        </svg>
+                        {/if}  
+                    </button>    
+                    {/if}
+                {:else}
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5d94a2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                    </svg>
+                </div>
+                {/if}           
+            </div>
         </div>
         {/each}
     {/await}
@@ -205,6 +278,46 @@
         font-size: larger;
         font-weight: 200;
     }
+
+    .review > div{
+        display: flex;
+        justify-content: space-between;
+        
+    }
+
+    .review > div > h4{
+        margin: 0;
+    }
+
+    .like{
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    
+    .delete{
+        display: flex;
+        background-color: rgb(255, 47, 47);
+        border: black 2px solid;
+        border-radius: 5px;
+        color: black;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .delete:hover{
+        background-color: rgb(143, 82, 82);
+    }
+
+    .delete > p{
+        margin: 0;
+    }
+
+
+
 
     /*Stolen button style*/
     .publish{
