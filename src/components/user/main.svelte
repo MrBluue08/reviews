@@ -24,12 +24,33 @@
         }
     }
 
+    let movieRatings = [];
+    async function getRatings(){
+        try {
+            const response = await fetch(`http://localhost:5000/review/getRatings`, {
+                headers: {"Content-Type": "application/json"},
+                method: 'GET'
+            });
+            const res = await response.json();
+            if (!response.ok) {
+                throw new Error('Server error');
+            }
+            console.clear();            
+            return res;
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+
     const getImageUrl = (path) => {
         return `http://localhost:5000${path}`;
     };
    
     onMount(async function(){
         films = await getFilms();
+        movieRatings = await getRatings();
+        console.log(movieRatings);
     })
 
     async function searchFilms(search){
