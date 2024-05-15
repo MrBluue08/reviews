@@ -15,7 +15,6 @@ const getRatings = async (reviews) => {
         totalRatings[review.film] += parseInt(review.rating);
     });
 
-    // Calculate average ratings
     let assignedRatings = {};
     for (let film in reviewAmount) {
         assignedRatings[film.toString()] = Math.round((totalRatings[film] / reviewAmount[film]) * 10)/10;
@@ -41,7 +40,6 @@ router.get('/getRatings', async (req, res) => {
     try{
         let result = await Review.find({});
         let ratings = await getRatings(result);
-        console.log(ratings);
         res.status(200).json(ratings);
     }catch(err){
         console.error(err);

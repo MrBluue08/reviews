@@ -18,11 +18,6 @@ router.post('/upload', upload.single('img'), (req, res) => {
     res.send('Image uploaded');
 })
 
-function reviewCount(films){
-    films.forEach(film => {
-        //Luego vengo
-    });
-}
 
 router.get('/startFilms', async (req, res) => {
     try {

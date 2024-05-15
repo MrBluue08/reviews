@@ -3,6 +3,8 @@
     import { navigate } from 'svelte-navigator';
     import {SearchIcon} from "svelte-feather-icons";
     import {filmSearcher} from '../../../scripts/searcherFilms';
+    import {Star} from 'flowbite-svelte';
+
 
     //Session variables
     let user  = localStorage.getItem('user');
@@ -35,7 +37,6 @@
             if (!response.ok) {
                 throw new Error('Server error');
             }
-            console.clear();            
             return res;
         } catch (error) {
             console.error('Error:', error.message);
@@ -50,7 +51,16 @@
     onMount(async function(){
         films = await getFilms();
         movieRatings = await getRatings();
-        console.log(movieRatings);
+        films = films.map(film => {
+            if(film.title in movieRatings){
+                film.rating = (movieRatings[film.title] / 5)  *100;
+            }else{
+                film.rating = 0;
+            }
+            return film;
+        });
+        
+        console.log(films);
     })
 
     async function searchFilms(search){
@@ -75,7 +85,8 @@
                     <div class="card" on:click={() => (navigate(`/filmProfile/${film._id}`))}>
                         <img src="{getImageUrl('/uploads/'+film.poster)}" alt="Poster of {film.title}" class="cardInfo img">
                         <div class="cardInfo txt">
-                            <h4>{film.title}</h4>
+                            <Star size={100} fillPercent={ film.rating } />
+                            <h4>{film.rating}%</h4>                  
                         </div>
                     </div>
                 {/each} 
@@ -136,7 +147,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         opacity: 0;
+        color: #00ff59
+    }
+
+    .cardInfo.txt > h4{
+        padding: 0;
+        margin: 0;
     }
 
     .card:hover .cardInfo.txt {
@@ -146,7 +164,7 @@
 
     .card:hover .cardInfo.img{
         border-radius: 5px;
-        border: 3px solid greenyellow;
+        border: 2px solid #00ff59;
     }
 
    /* Stolen searchbar style */
