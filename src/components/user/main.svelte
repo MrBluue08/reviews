@@ -126,7 +126,7 @@
         display: grid;
         grid-template-columns: 1;
         grid-template-rows: 1;
-        padding: 0 0.5vh 1vh 0.5vh;
+        margin: 0 0.5vh 1vh 0.5vh;
         
     }
 
@@ -149,7 +149,12 @@
         align-items: center;
         justify-content: center;
         opacity: 0;
-        color: #00ff59
+        color: #00ff59;
+        z-index: 2;
+    }
+
+    .cardInfo.img{
+        z-index: 1;
     }
 
     .cardInfo.txt > h4{
@@ -157,15 +162,24 @@
         margin: 0;
     }
 
+    .card:hover {
+        border-radius: 5px;
+        border: 2px solid #00ff59;
+       
+
+
+    }
+
+    .card:hover .cardInfo.img {
+        filter: blur(1px);
+        transition: filter 0.3s ease; 
+    }
+    
     .card:hover .cardInfo.txt {
         transition: opacity 0.3s ease; 
         opacity: 1;
     }
 
-    .card:hover .cardInfo.img{
-        border-radius: 5px;
-        border: 2px solid #00ff59;
-    }
 
    /* Stolen searchbar style */
    .search-box{
