@@ -33,6 +33,7 @@
         <!-- RUTAS DE USER -->
         <Route path="/" component={Main}/>
         <Route path="/filmProfile/:filmId" component={filmProfile}/>
+        <Route path="/userProfile/:userId" component={ProfileUser}/>
     </Router>
 
 </div>

@@ -235,8 +235,11 @@
    .header{
         width: 100%;
         height: 8vh;
+        position: fixed;
         display: flex;
         justify-content: center;
+        background-color: #2C3E50;
+
     }
 
     .navbar {

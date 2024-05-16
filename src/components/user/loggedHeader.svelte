@@ -20,7 +20,10 @@
                 {/if}
                 <button on:click={logout}>Log out</button>
                 {#if !admin}
-                    <button>{user.username}</button>
+                    <button on:click={() => {
+                        navigate(`/userProfile/${user.username}`); 
+                        location.reload()
+                    }}>{user.username}</button>
                 {/if}
             </div>
         </div>

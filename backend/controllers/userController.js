@@ -35,5 +35,15 @@ router.post('/login', async (req, res) =>{
     }
 })
 
+router.get('/getUser/:userName', async (req, res) => {
+    try {
+        const user = await User.findOne({username: req.params.userName});
+        return res.status(200).json(user);
+    } catch (error) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
 
 module.exports = router;
