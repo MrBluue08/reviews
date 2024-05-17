@@ -3,6 +3,7 @@
     import {onMount} from 'svelte';
     import {Rating} from 'flowbite-svelte';
     import {TrashIcon} from "svelte-feather-icons";
+    import { navigate } from 'svelte-navigator';
 
 
     export let filmId;
@@ -172,7 +173,11 @@
             <p>{review.text}</p>
             <Rating total={5} rating={review.rating}/>
             <div class="reviewFooter">
-                <h4>{review.user}</h4>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <h4 class="profileAcces" on:click={() => {
+                    navigate(`/userProfile/${review.user}`); 
+                    location.reload()
+                }}>{review.user}</h4>
                 {#if logged}
                     {#if admin}
                     <button on:click={dropReview(review._id)} class="delete">
@@ -289,6 +294,11 @@
 
     .reviewFooter > h4{
         margin: 0;
+        cursor: pointer;
+    }
+
+    .reviewFooter > h4:hover{
+        color: #00ff59;
     }
 
     .reviewFooter > div{
