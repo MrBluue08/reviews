@@ -102,15 +102,6 @@ router.delete('/dropReview', async (req, res) => {
 });
 
 
-router.get('/userReviews/:username', async (req, res) => {
-    try {
-        const reviews = await Review.find({user: req.params.username});
-        res.status(200).json(reviews);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({message: error});
 
-    }
-})
 
 module.exports = router
