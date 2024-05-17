@@ -33,7 +33,7 @@
                 <input type="text" class="input-search" placeholder="Search for films..." on:input={(e) => searchFilms(e.target.value)}>
             </div>
             <div>
-                <button class="btn-add" on:click={() => navigate('/newFilm')}>
+                <button class="btn-add" on:click={() => navigate('/newFilm/empty')}>
                     <PlusIcon/>
                 </button>
             </div>
@@ -46,7 +46,7 @@
                 {#each films as film}
                     <li class="film">
                         <p>{film.title}</p>
-                        <button>
+                        <button on:click={() => navigate(`/newFilm/${film._id}`)}>
                             <EditIcon/>
                         </button>
                     </li>

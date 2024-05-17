@@ -1,6 +1,9 @@
 <script>
     import { navigate } from "svelte-navigator";
+    import { onMount } from "svelte";
 
+
+    export let filmId;
     //form Variables
     let title, director, sinopsis, releaseDate;
     let imgInput;
@@ -40,18 +43,94 @@
                      method: 'POST',
                      body: formData
                 });
-                navigate('/');
 
             }
+            navigate('/');
+            location.reload();
+
         } catch (error) {
             console.error('Error:', error.message);
         }
     }
+
+    async function editFilm(){
+        try {
+            let photo = new File([imgInput.files[0]], title, {type: file.type} );
+            const response = await fetch(`http://localhost:5000/film/editFilm/${filmId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ title, director, sinopsis, releaseDate })
+            });
+
+            const film = await response.json();
+            if (!response.ok) {
+                throw new Error('Failed to add new film');
+            }else{
+                const formData = new FormData();
+                formData.append('img', photo);
+                const uploadedPoster = await fetch("http://localhost:5000/film/upload", {
+                     method: 'POST',
+                     body: formData
+                });
+
+            }
+
+            navigate('/');
+            location.reload();
+            
+
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+    let film = {};
+    async function getFilm(){
+        try {
+            const response = await fetch(`http://localhost:5000/film/getFilm/${filmId}`, {
+                headers: {"Content-Type": "application/json"},
+                method: 'GET'
+            });
+            const res = await response.json();
+            if (!response.ok) {
+                throw new Error('Server error');
+            }
+            return res;
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+    onMount(async () => {
+        if(filmId !== "empty"){
+            film =  await getFilm();
+
+            title = film.title;
+            director = film.director;
+            sinopsis = film.sinopsis;
+            releaseDate = film.releaseDate;
+            preview.style.display = "inline";
+            preview.src = `http://localhost:5000/uploads/${film.poster}`;
+        }
+    });
+
+    async function handleSubmit(){
+        if(filmId !== "empty"){
+            editFilm();
+        }else{
+            addFilm();
+        }
+    }
+    
+
+    
 </script>
 
 <main> 
     <div class="container">
-        <form  on:submit|preventDefault={addFilm}  enctype="multipart/form-data">
+        <form  on:submit|preventDefault={handleSubmit}  enctype="multipart/form-data">
             <div class="title">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" bind:value={title} required>

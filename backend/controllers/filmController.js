@@ -75,6 +75,28 @@ router.get('/getPosters', async (req, res) => {
     }
 });
 
+router.post('/editFilm/:id', async (req, res) => {
+    try {
+        let film = await Film.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            sinopsis: req.body.sinopsis,
+            director: req.body.director,
+            poster: changeFileName(req.body.title),
+            releaseDate: req.body.releaseDate
+        }, { new: true }).exec();
+
+        if (!film) {
+            return res.status(404).json({ error: 'Film not found' });
+        }
+
+        res.status(200).json(film);
+        
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal server error");
+    }
+})
+
 
 router.post('/addFilm', async(req, res) => {
     try{

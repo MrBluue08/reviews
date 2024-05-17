@@ -26,7 +26,7 @@
             <Route path="/adminLogin" component={Login}/>
         {/if}
         {#if admin}
-            <Route path="/newFilm" component={NewFilm}/>
+            <Route path="/newFilm/:filmId" component={NewFilm}/>
             <Route path="/filmList" component={FilmList}/>
         {/if}
 
