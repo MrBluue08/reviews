@@ -5,7 +5,7 @@
     import Main from "./components/user/main.svelte";
     import Header from "./components/user/header.svelte";
     import LoggedHeader from "./components/user/loggedHeader.svelte";
-    import NewFilm from "./components/admin/newFilm.svelte";
+    import filmForm from "./components/admin/filmForm.svelte";
     import Login from "./components/admin/login.svelte";
     import FilmList from "./components/admin/filmList.svelte";
     import filmProfile from "./components/user/filmProfile.svelte";
@@ -26,7 +26,7 @@
             <Route path="/adminLogin" component={Login}/>
         {/if}
         {#if admin}
-            <Route path="/newFilm/:filmId" component={NewFilm}/>
+            <Route path="/filmForm/:filmId" component={filmForm}/>
             <Route path="/filmList" component={FilmList}/>
         {/if}
 
