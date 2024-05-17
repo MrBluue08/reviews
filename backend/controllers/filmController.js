@@ -3,12 +3,19 @@ const router = express.Router();
 const multer = require('multer');
 const Film = require('../models/films');
 
+function changeFileName(str) {
+    let words = str.split(" ");
+    let result = words.map(word => word.toLowerCase()).join("_");
+    result += "_poster.jpg";
+    return result;
+}
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './uploads');
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname);
+        cb(null, changeFileName(file.originalname));
     }
 });
 
@@ -53,13 +60,13 @@ router.get('/filmSearch/:search', async (req,res) => {
 router.post('/addFilm', async(req, res) => {
     try{
         let result = await Film.findOne({"title": req.body.title}).exec();
-        console.log(result);
+        let posterName = changeFileName(req.body.title);
         if(!result){
             const film = new Film({
                 title: req.body.title,
                 sinopsis: req.body.sinopsis,
                 director: req.body.director,
-                poster: req.body.imgName,
+                poster:  posterName,
                 releaseDate: req.body.releaseDate
             });
             await film.save();

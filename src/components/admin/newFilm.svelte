@@ -6,14 +6,7 @@
     let imgInput;
     let preview;
 
-    function changeFileName(str) {
-        console.log(str);
-        let words = str.split(" ");
-        let result = words.map(word => word.toLowerCase()).join("_");
-        result += "_poster.jpg";
-        return result;
-    }
-
+   
     function displayImg() {
         let photo = imgInput.files[0];
         let reader = new FileReader();
@@ -28,14 +21,13 @@
 
     async function addFilm(){
         try {
-            let photo = new File([imgInput.files[0]], changeFileName(title), {type: file.type} );
-            let imgName = photo.name;
+            let photo = new File([imgInput.files[0]], title, {type: file.type} );
             const response = await fetch("http://localhost:5000/film/addFilm", {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({ title, director, sinopsis, releaseDate, imgName })
+                body: JSON.stringify({ title, director, sinopsis, releaseDate })
             });
 
             const film = await response.json();
