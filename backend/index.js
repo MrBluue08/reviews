@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
 const router = require('./routes/routes');
+const port = 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -18,7 +19,7 @@ connection.once('open', () => {
     console.log('MongoDB connected');
 })
 
-app.listen(5000, () =>  {
-    console.log('App is listening in 5000');
+app.listen(port, () =>  {
+    console.log(`App is listening in ${port}`);
 })
 

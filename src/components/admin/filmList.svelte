@@ -75,7 +75,7 @@
     }
 
     .film{
-        height: 3vh;
+        height: 5vh;
         padding-left: 1vw;
         margin-bottom: 1vh;
         background-color: #22a6b3;
@@ -88,8 +88,14 @@
     .film > button{
         padding: 0;
         margin: 0;
+        padding-right: 0.5vw;
         color: white;
     }
+
+    .film > button:hover{
+        color: #00ff59;
+    }
+
     button{     
         border: none;
         outline: none;
