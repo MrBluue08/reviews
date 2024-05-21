@@ -56,6 +56,7 @@
     async function editFilm(){
         try {
             let photo = new File([imgInput.files[0]], title, {type: file.type} );
+            console.log(photo);
             const response = await fetch(`http://localhost:5000/film/editFilm/${filmId}`, {
                 method: 'POST',
                 headers: {
@@ -68,13 +69,14 @@
             if (!response.ok) {
                 throw new Error('Failed to add new film');
             }else{
-                const formData = new FormData();
-                formData.append('img', photo);
-                const uploadedPoster = await fetch("http://localhost:5000/film/upload", {
-                     method: 'POST',
-                     body: formData
-                });
-
+                if(imgInput.files.length){
+                    const formData = new FormData();
+                    formData.append('img', photo);
+                    const uploadedPoster = await fetch("http://localhost:5000/film/upload", {
+                        method: 'POST',
+                        body: formData
+                    });
+                }
             }
 
             navigate('/');
@@ -113,6 +115,7 @@
             releaseDate = film.releaseDate;
             preview.style.display = "inline";
             preview.src = `http://localhost:5000/uploads/${film.poster}`;
+
         }
     });
 
