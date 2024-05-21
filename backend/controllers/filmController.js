@@ -54,16 +54,22 @@ router.get('/getFilm/:filmId', async (req, res) => {
     }
 });
 
-router.get('/filmSearch/:search', async (req,res) => {
+router.get('/filmSearch/:search', async (req, res) => {
     try {
-        let result = await Film.find({"title": {$regex: new RegExp(req.params.search)}})
+        let searchQuery = req.params.search;
+        
+        if (!searchQuery || typeof searchQuery !== 'string' || searchQuery.trim() === '') {
+            return res.status(400).json({ error: "Invalid search query" });
+        }
+
+        let regex = new RegExp(searchQuery.trim(), 'i');
+        let result = await Film.find({ "title": { $regex: regex } });
         res.status(200).json(result);
-    }catch (err) {
+    } catch (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
     }
 });
-
 router.get('/getPosters', async (req, res) => {
     try {
         let result = await Film.find({});
