@@ -61,7 +61,6 @@ router.get('/filmSearch/:search', async (req, res) => {
         if (!searchQuery || typeof searchQuery !== 'string' || searchQuery.trim() === '') {
             return res.status(400).json({ error: "Invalid search query" });
         }
-
         let regex = new RegExp(searchQuery.trim(), 'i');
         let result = await Film.find({ "title": { $regex: regex } });
         res.status(200).json(result);
@@ -70,6 +69,7 @@ router.get('/filmSearch/:search', async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
 router.get('/getPosters', async (req, res) => {
     try {
         let result = await Film.find({});

@@ -126,7 +126,7 @@
         display: grid;
         grid-template-columns: 1;
         grid-template-rows: 1;
-        margin: 0 0.5vh 1vh 0.5vh;
+        padding: 0 0.5vh 1vh 0.5vh;
         
     }
 
@@ -162,20 +162,14 @@
         margin: 0;
     }
 
-    .card:hover {
-        border-radius: 5px;
-        border: 2px solid #00ff59;
-       
-
-
-    }
-
     .card:hover .cardInfo.img {
         filter: blur(1px);
         transition: filter 0.3s ease; 
     }
     
     .card:hover .cardInfo.txt {
+        border-radius: 5px;
+        border: 2px solid #00ff59;
         transition: opacity 0.3s ease; 
         opacity: 1;
     }
