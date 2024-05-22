@@ -40,7 +40,7 @@ router.post('/upload', upload.single('img'), (req, res) => {
 
 router.get('/startFilms', async (req, res) => {
     try {
-        let films = await Film.find({}).exec();
+        let films = await Film.find({}).sort({ title: 1 }).exec();
         res.status(200).json(films);
     } catch (err) {
         console.error(err);
@@ -66,7 +66,7 @@ router.get('/filmSearch/:search', async (req, res) => {
             return res.status(400).json({ error: "Invalid search query" });
         }
         let regex = new RegExp(searchQuery.trim(), 'i');
-        let result = await Film.find({ "title": { $regex: regex } });
+        let result = await Film.find({ "title": { $regex: regex } }).sort({ title: 1 });
         res.status(200).json(result);
     } catch (err) {
         console.error(err);

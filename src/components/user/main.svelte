@@ -43,14 +43,7 @@
         }
     }
 
-
-    const getImageUrl = (path) => {
-        return `http://localhost:5000${path}`;
-    };
-   
-    onMount(async function(){
-        films = await getFilms();
-        movieRatings = await getRatings();
+    function asignRatings(){
         films = films.map(film => {
             if(film.title in movieRatings){
                 film.rating = (movieRatings[film.title] / 5)  *100;
@@ -59,12 +52,22 @@
             }
             return film;
         });
-        
-        console.log(films);
+    }
+
+    const getImageUrl = (path) => {
+        return `http://localhost:5000${path}`;
+    };
+   
+    onMount(async function(){
+        films = await getFilms();
+        movieRatings = await getRatings();
+        asignRatings();
     })
+    
 
     async function searchFilms(search){
         films = await filmSearcher(search);
+        asignRatings();
     }
 </script>
 

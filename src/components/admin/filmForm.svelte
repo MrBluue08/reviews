@@ -56,7 +56,6 @@
     async function editFilm(){
         try {
             let photo = new File([imgInput.files[0]], title, {type: file.type} );
-            console.log(photo);
             const response = await fetch(`http://localhost:5000/film/editFilm/${filmId}`, {
                 method: 'POST',
                 headers: {

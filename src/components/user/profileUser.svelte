@@ -29,7 +29,6 @@
             if (!response.ok) {
                 throw new Error('Server error');
             }
-            console.log(res);
             return res;
         } catch (error) {
             console.error(error);
@@ -46,7 +45,6 @@
             if (!response.ok) {
                 throw new Error('Server error');
             }
-            console.log(res);
             return res;
         } catch (error) {
             console.error(error);

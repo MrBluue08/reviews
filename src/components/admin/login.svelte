@@ -8,7 +8,6 @@
 
   async function login(){
     try {
-      console.log(username, password);
       const response = await fetch("http://localhost:5000/admin/login", {
           method: 'POST',
           headers: {
