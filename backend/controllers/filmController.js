@@ -4,11 +4,15 @@ const multer = require('multer');
 const Film = require('../models/films');
 
 function changeFileName(str) {
-    let words = str.split(" ");
+    str = str.replace(/:/g, "");
+    str = str.trim();
+    let words = str.split(/\s+/);
     let result = words.map(word => word.toLowerCase()).join("_");
     result += "_poster.jpg";
+    
     return result;
 }
+
 
 async function assignPosters(films) {
     let posters = {};
