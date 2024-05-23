@@ -22,18 +22,19 @@ const getRatings = async (reviews) => {
 
     return assignedRatings;
 };
+
 router.get('/getReviews/:type/:id', async (req, res) => {
     try{
         let tipo = req.params.type;
         let query = {};
         query[tipo] = req.params.id;
         let result = await Review.find(query);
+        result = result.sort((first, second) => second.likes.length - first.likes.length);
         res.status(200).json(result);
     }catch(err){
         console.error(err);
         res.status(500).send("Internal Server Error");
     }
-
 })
 
 router.get('/getRatings', async (req, res) => {
